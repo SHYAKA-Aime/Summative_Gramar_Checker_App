@@ -30,7 +30,7 @@ async function checkGrammar() {
     loading.classList.add("hidden");
 
     if (Array.isArray(errors) && errors.length > 0) {
-      originalErrors = errors; // Save for filtering
+      originalErrors = errors; 
       renderSuggestions(errors);
     } else {
       output.innerHTML = "<p style='color:green; font-weight:bold;'>No grammatical errors found! 🎉</p>";
@@ -49,7 +49,7 @@ function renderSuggestions(errors) {
 
   errors.forEach(error => {
     const div = document.createElement("div");
-    div.setAttribute("data-type", error.type); // for filtering
+    div.setAttribute("data-type", error.type); 
     div.innerHTML = `
       <p><strong>Issue:</strong> ${error.bad}</p>
       <p><strong>Suggestion:</strong> ${error.better.join(', ')}</p>
@@ -91,7 +91,7 @@ function showTooltip() {
 
   setTimeout(() => {
     tooltip.classList.remove("show");
-  }, 2000); // tooltip visible for 2 seconds
+  }, 2000);
 }
 
 
