@@ -59,7 +59,7 @@ grammar-checker/
 1. Clone the repository:
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/SHYAKA-Aime/Summative_Gramar_Checker_App
 cd grammar-checker
 ```
 
