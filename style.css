@@ -1,0 +1,182 @@
+/* Base Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(145deg, #e2eafc, #dff5ff);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* App Container */
+.app-wrapper {
+  width: 100%;
+  max-width: 720px;
+}
+
+.app-box {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Title */
+h1 {
+  font-size: 28px;
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Textarea */
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+  font-weight: 500;
+}
+
+textarea {
+  width: 100%;
+  height: 160px;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.3s border ease;
+  resize: vertical;
+  margin-bottom: 20px;
+}
+
+textarea:focus {
+  border-color: #007bff;
+}
+
+/* Button */
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-bottom: 20px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Loading */
+#loading {
+  text-align: center;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+/* Output Box */
+.output-box {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-left: 4px solid #007bff;
+  border-radius: 6px;
+}
+
+.output-box p {
+  margin: 6px 0;
+  color: #333;
+}
+
+.output-box hr {
+  margin: 10px 0;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .app-box {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+}
+
+
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.controls select,
+.controls button {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.controls button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+.controls button:hover {
+  background-color: #0056b3;
+}
+
+.tooltip-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 125%; /* Position above the button */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.tooltip.show {
+  opacity: 1;
+}
+#copyBtn{
+  background-color:#004687;
+}
+#clearBtn{
+  background-color:dimgray;
+}

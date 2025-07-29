@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grammar & Spell Checker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-wrapper">
+    <div class="app-box">
+      <h1>Welcome to Grammar & Spell Checker</h1>
+
+      <label for="inputText">Your Text</label>
+      <textarea id="inputText" placeholder="Type or paste your text here..."></textarea>
+
+      <button onclick="checkGrammar()" id="checkBtn">Check Grammar</button>
+
+      <div id="loading" class="hidden">Checking for issues...</div>
+      <div class="controls">
+        <select id="filter" onchange="filterSuggestions()">
+          <option value="all">All Issues</option>
+          <option value="spelling">Spelling Only</option>
+          <option value="grammar">Grammar Only</option>
+        </select>
+        <div class="tooltip-wrapper">
+          <button onclick="copySuggestions()" id="copyBtn">Copy Suggestions</button>
+          <span id="copyTooltip" class="tooltip">Copied!</span>
+          <button onclick="clearAll()" id="clearBtn">Clear</button>
+        </div>
+        
+
+      </div>
+      
+      <div id="output" class="output-box"></div>
+      
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
