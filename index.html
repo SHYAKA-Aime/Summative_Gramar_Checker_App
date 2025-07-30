@@ -5,18 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Grammar & Spell Checker</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="app-wrapper">
     <div class="app-box">
-      <h1>Welcome to Grammar & Spell Checker</h1>
+      <h1>Grammar & Spell Checker</h1>
 
-      <label for="inputText">Your Text</label>
+      <label for="inputText" class="label">Your Text</label>
       <textarea id="inputText" placeholder="Type or paste your text here..."></textarea>
 
-      <button onclick="checkGrammar()" id="checkBtn">Check Grammar</button>
+      <div class="button-row">
+        <button onclick="checkGrammar()" id="checkBtn">Check Grammar</button>
+        <button onclick="clearAll()" id="clearBtn">Clear</button>
+      </div>
 
-      <div id="loading" class="hidden">Checking for issues...</div>
+      <div id="loading" class="loading hidden">🔍 Checking for issues...</div>
+
       <div class="controls">
         <select id="filter" onchange="filterSuggestions()">
           <option value="all">All Issues</option>
@@ -26,17 +31,14 @@
         <div class="tooltip-wrapper">
           <button onclick="copySuggestions()" id="copyBtn">Copy Suggestions</button>
           <span id="copyTooltip" class="tooltip">Copied!</span>
-          <button onclick="clearAll()" id="clearBtn">Clear</button>
         </div>
-        
-
       </div>
-      
+
       <div id="output" class="output-box"></div>
-      
     </div>
   </div>
-
+  
+  <script src="env.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
