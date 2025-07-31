@@ -196,7 +196,7 @@ The load balancer uses round-robin distribution which can be verified by:
 
 ### App Homepage
 
-![Load balancer testing screenshot screenshot](./screenshots/loadbalancer.pngs)
+![Load balancer testing screenshot screenshot](./screenshots/loadbalancer.png)
 
 ## User Guide
 
