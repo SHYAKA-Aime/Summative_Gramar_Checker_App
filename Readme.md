@@ -165,7 +165,22 @@ docker run -d --name writewise-app --restart unless-stopped \
 
 ### Testing Steps
 
-1. **Access the load balancer**: Visit the load balancer URL multiple times
+1. **Access the load balancer**: Visit the load balancer URL multiple times at
+
+```bash
+https://load-balancer-aime.onrender.com
+
+```
+
+or use curl
+
+```bash
+for i in {1..10}; do
+  curl -s https://load-balancer-aime.onrender.com | grep 'meta http-equiv';
+done
+
+```
+
 2. **Monitor traffic distribution**: Each request should alternate between Web01 and Web02
 3. **Verify functionality**: Ensure the application works correctly from both servers
 
@@ -176,6 +191,12 @@ The load balancer uses round-robin distribution which can be verified by:
 - Monitoring server logs on both Web01 and Web02
 - Observing the redirect pattern in browser developer tools
 - Checking response times and server headers
+
+- Refer to the attached screenshot I used to test
+
+### App Homepage
+
+![Load balancer testing screenshot screenshot](../../Screenshots/Screenshot%202025-07-31%20at%2016.32.52.png)
 
 ## User Guide
 
