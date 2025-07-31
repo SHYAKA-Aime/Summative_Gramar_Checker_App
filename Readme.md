@@ -299,6 +299,6 @@ The load balancer uses round-robin distribution which can be verified by:
 
 **Solution**: Fixed IP addresses in HAProxy config (172.20.0.11, 172.20.0.12) and verified network setup.
 
-**Demo Video**: [Link to your demo video]
+**Demo Video**: https://youtu.be/pkztzz-4ILw
 **Live Application**: https://load-balancer-aime.onrender.com
 **GitHub Repository**: https://github.com/SHYAKA-Aime/Summative_writting_assistant_App
