@@ -1,4 +1,4 @@
-# WriteWise - Your Writing Assistant
+# WriteWise - Writing Assistant App
 
 ## Overview
 
