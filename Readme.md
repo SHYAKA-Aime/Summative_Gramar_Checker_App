@@ -1,242 +1,283 @@
-# Grammar & Spell Checker Application
+# WriteWise - Your Writing Assistant
 
-A web-based grammar and spell checking application that helps users identify and correct grammatical errors and spelling mistakes in their text. The application provides real-time feedback with suggestions for improvements, making it a valuable tool for writers, students, and professionals.
+## Overview
+
+WriteWise is a comprehensive grammar and spell checking web application that helps users improve their writing by identifying and correcting grammatical errors and spelling mistakes. The application provides real-time feedback with intelligent suggestions and features an auto-correct functionality for seamless text improvement.
 
 ## Features
 
-- **Real-time Grammar Checking**: Analyze text for grammatical errors and spelling mistakes
-- **Interactive Suggestions**: Click-to-apply corrections with detailed explanations
-- **Filtering Options**: Filter results by issue type (All Issues, Spelling Only, Grammar Only)
-- **Copy Functionality**: Copy all suggestions to clipboard for easy reference
-- **Clean Interface**: User-friendly web interface with responsive design
-- **Clear Function**: Reset the application with a single click
+- **Real-time Grammar & Spell Checking**: Identifies both grammatical and spelling errors in user text
+- **Interactive Error Highlighting**: Visual highlighting of errors directly in the text input
+- **Smart Suggestions**: Provides multiple correction suggestions for each identified error
+- **Auto-Correct Functionality**: One-click correction of all identified errors
+- **Error Filtering**: Filter results by error type (All, Spelling Only, Grammar Only)
+- **Text Management**: Copy corrected text or replace original text with corrections
+- **Responsive Design**: Clean, modern interface that works across devices
+- **Load Balanced Deployment**: High availability through round-robin load balancing
 
-## API Information
+## Technology Stack
 
-This application uses the **TextGears Grammar Check API** from RapidAPI:
+- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
+- **API**: TextGears Grammar API via RapidAPI
+- **Containerization**: Docker
+- **Deployment**: Render.com with custom Node.js load balancer
+
+## External API
+
+This application uses the **TextGears Grammar API** provided through RapidAPI:
 
 - **API Documentation**: [TextGears API on RapidAPI](https://rapidapi.com/textgears/api/textgears1)
-- **API Endpoint**: `https://textgears-textgears-v1.p.rapidapi.com/grammar`
-- **Method**: POST
-- **Content-Type**: `application/x-www-form-urlencoded`
+- **Purpose**: Provides comprehensive grammar and spell checking capabilities
+- **Rate Limits**: Please refer to your RapidAPI subscription limits
+- **Language Support**: English (en-US)
 
-### Getting API Keys
-
-1. Visit [RapidAPI TextGears](https://rapidapi.com/textgears/api/textgears1)
-2. Sign up for a RapidAPI account if you don't have one
-3. Subscribe to the TextGears API (free tier available)
-4. Copy your API key from the dashboard
+_Special thanks to TextGears for providing this powerful grammar checking service._
 
 ## Project Structure
 
 ```
-grammar-checker/
+writeWise/
 ├── index.html          # Main HTML file
-├── style.css           # Stylesheet
-├── script.js           # JavaScript functionality
-├── Dockerfile          # Docker configuration
-├── .gitignore          # Git ignore file
-├── .dockerignore       # Docker ignore file
-├── .env                # Environment variables (not used for static web)
-└── README.md           # This file
+├── style.css          # Application styles
+├── script.js          # Core JavaScript functionality
+├── env.js             # Environment configuration
+├── Dockerfile         # Docker container configuration
+├── .gitignore         # Git ignore rules
+├── .dockerignore      # Docker ignore rules
+└── README.md          # This file
 ```
-
-## Docker Hub Repository
-
-- **Repository URL**: [https://hub.docker.com/r/appoemaster/summative-gramar-checker](https://hub.docker.com/r/appoemaster/summative-gramar-checker)
-- **Image Name**: `appoemaster/summative-gramar-checker`
-- **Available Tags**: `v1`, `latest`
 
 ## Local Development
 
 ### Prerequisites
 
-- Web browser (Chrome, Firefox, Safari, etc.)
+- Modern web browser (Chrome, Firefox, Safari, Edge)
 - Docker (for containerization)
+- API key from RapidAPI for TextGears
 
-### Running Locally (Without Docker)
+### Running Locally
 
-1. Clone the repository:
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/SHYAKA-Aime/Summative_writting_assistant_App
+   cd writeWise
+   ```
+
+2. **Configure API Key**:
+
+   - Update the `x-rapidapi-key` in `env.js` with your own RapidAPI key for better security practices
+
+3. **Open in Browser**:
+   - Simply open `index.html` in your web browser
+   - Or serve using a local server:
+     ```bash
+     python -m http.server 8080
+     # or
+     npx serve .
+     ```
+
+## Docker Deployment
+
+### Image Details
+
+- **Docker Hub Repository**: [appoemaster/summative-writing-assistant](https://hub.docker.com/r/appoemaster/summative-writing-assistant)
+- **Image Name**: `appoemaster/summative-writing-assistant`
+- **Tags**: `v1`, `latest`
+
+### Build Instructions
+
+1. **Build the Docker image locally**:
+
+   ```bash
+   docker build -t appoemaster/summative-writing-assistant:v1 .
+   ```
+
+2. **Test locally**:
+
+   ```bash
+   docker run -p 8080:8080 appoemaster/summative-writing-assistant:v1
+   ```
+
+3. **Verify functionality**:
+   ```bash
+   curl http://localhost:8080
+   ```
+
+### Deployment Architecture
+
+The application is deployed using a custom load balancing solution:
+
+#### Web Servers
+
+- **Web01**: https://web01-aime.onrender.com/
+- **Web02**: https://web02-aime.onrender.com/
+
+#### Load Balancer Configuration
+
+The load balancer is implemented as a Node.js application using round-robin distribution:
+
+```javascript
+const http = require("http");
+const servers = [
+  "https://web01-aime.onrender.com/",
+  "https://web02-aime.onrender.com/",
+];
+
+let current = 0;
+const server = http.createServer((req, res) => {
+  // Round-robin server selection
+  const target = servers[current];
+  current = (current + 1) % servers.length;
+
+  // Redirect with loading page
+  const loadingPage = `<!-- Loading page HTML -->`;
+  res.writeHead(200, { "Content-Type": "text/html" });
+  res.end(loadingPage);
+});
+
+server.listen(process.env.PORT || 8080);
+```
+
+### Run Instructions
+
+**On Web01 and Web02**:
 
 ```bash
-git clone https://github.com/SHYAKA-Aime/Summative_Gramar_Checker_App
-cd grammar-checker
+# Pull the image
+docker pull appoemaster/summative-writing-assistant:v1
+
+# Run the container
+docker run -d --name writewise-app --restart unless-stopped \
+  -p 8080:8080 appoemaster/summative-writing-assistant:v1
 ```
 
-2. Open `index.html` in your web browser
-3. The application should load and be ready to use
-
-### Building Docker Image Locally
+**Environment Variables** (if using secure API key management):
 
 ```bash
-# Build the Docker image
-docker build -t appoemaster/summative-gramar-checker:v1 .
-
-# Test the container locally
-docker run -p 8080:8080 appoemaster/summative-gramar-checker:v1
-
-# Verify it works
-curl http://localhost:8080
-# Or open http://localhost:8080 in your browser
+docker run -d --name writewise-app --restart unless-stopped \
+  -p 8080:8080 \
+  -e RAPIDAPI_KEY=your_api_key_here \
+  appoemaster/summative-writing-assistant:v1
 ```
 
-## Deployment Instructions
+## Load Balancer Testing
 
-### Step 1: Pull Docker Image on Web Servers
+### Testing Steps
 
-SSH into both **web-01** and **web-02** servers and run:
+1. **Access the load balancer**: Visit the load balancer URL multiple times
+2. **Monitor traffic distribution**: Each request should alternate between Web01 and Web02
+3. **Verify functionality**: Ensure the application works correctly from both servers
 
-```bash
-# Pull the image from Docker Hub
-docker pull appoemaster/summative-gramar-checker:v1
+### Evidence of Load Balancing
 
-# Run the container on each server
-docker run -d --name grammar-app --restart unless-stopped \
-  -p 8080:8080 appoemaster/summative-gramar-checker:v1
-```
+The load balancer uses round-robin distribution which can be verified by:
 
-### Step 2: Verify Individual Server Access
+- Monitoring server logs on both Web01 and Web02
+- Observing the redirect pattern in browser developer tools
+- Checking response times and server headers
 
-Ensure each instance is accessible:
+## User Guide
 
-- **Web-01**: `http://web-01:8080`
-- **Web-02**: `http://web-02:8080`
+### How to Use WriteWise
 
-### Step 3: Configure Load Balancer (HAProxy)
+1. **Enter Text**: Type or paste your text in the main textarea
+2. **Check Grammar**: Click the "Check text" button to analyze your text
+3. **Review Suggestions**: View identified errors with suggestions in the results section
+4. **Filter Results**: Use the dropdown to filter by error type (All/Spelling/Grammar)
+5. **Apply Corrections**:
+   - Use "Auto-Correct All" to apply all suggestions automatically
+   - Or manually review and apply individual suggestions
+6. **Manage Results**: Copy corrected text or replace the original text
+7. **Clear**: Use the "Clear" button to reset the application
 
-Update the HAProxy configuration file (`/etc/haproxy/haproxy.cfg`) on **lb-01**:
+### Error Types
 
-```haproxy
-backend webapps
-    balance roundrobin
-    server web01 172.20.0.11:8080 check
-    server web02 172.20.0.12:8080 check
-```
-
-### Step 4: Reload HAProxy Configuration
-
-```bash
-# Reload HAProxy configuration
-docker exec -it lb-01 sh -c 'haproxy -sf $(pidof haproxy) -f /etc/haproxy/haproxy.cfg'
-```
-
-## Testing Load Balancing
-
-### End-to-End Testing
-
-1. **Test Round-Robin Distribution**:
-
-```bash
-# Run multiple requests to verify load balancing
-for i in {1..10}; do
-  curl -s http://localhost | grep -o "Server: [^<]*" || echo "Request $i completed"
-  sleep 1
-done
-```
-
-2. **Browser Testing**:
-
-   - Access the application through the load balancer: `http://localhost`
-   - Check browser developer tools → Network tab to verify responses
-   - Submit multiple grammar check requests to test functionality
-
-3. **Evidence Collection**:
-   - Monitor HAProxy stats (if enabled)
-   - Check server logs on both web-01 and web-02
-   - Take screenshots of successful responses from both servers
-
-### Verification Steps
-
-✅ Application loads correctly through load balancer  
-✅ Grammar checking functionality works as expected  
-✅ Traffic alternates between web-01 and web-02  
-✅ Both servers handle requests without errors  
-✅ Load balancer health checks pass for both backends
+- **Spelling Errors**: Highlighted in red, indicates misspelled words
+- **Grammar Errors**: Highlighted in blue, indicates grammatical issues
 
 ## Security Considerations
 
 ### API Key Management
 
-**Current Implementation**: API key is embedded in the client-side JavaScript for demonstration purposes.
+- **Development**: API keys are currently embedded in the code for demo purposes
+- **Production Recommendation**: Use environment variables or secure secret management
+- **Docker Environment Variables**:
+  ```bash
+  docker run -e RAPIDAPI_KEY=your_secure_key appoemaster/summative-writing-assistant:v1
+  ```
 
-**Production Recommendations**:
+### Best Practices Implemented
 
-1. **Environment Variables**: Store API keys as environment variables
-2. **Backend Proxy**: Implement a backend service to proxy API requests
-3. **Key Rotation**: Regularly rotate API keys
-4. **Rate Limiting**: Implement client-side rate limiting
+- Input validation and sanitization
+- Error handling for API failures
+- No sensitive data stored in localStorage
+- HTTPS enforcement in production
 
-### Hardening Steps (Production Ready)
+## Development Challenges & Solutions
 
-For a production deployment, consider:
+### Challenges Encountered
 
-```dockerfile
-# In Dockerfile, use environment variables
-ENV RAPIDAPI_KEY=""
+1. **API Rate Limiting**:
 
-# Pass API key at runtime
-docker run -d --name grammar-app \
-  -e RAPIDAPI_KEY="your-api-key-here" \
-  -p 8080:8080 appoemaster/summative-gramar-checker:v1
-```
+   - **Solution**: Implemented request throttling and user feedback for rate limit exceeded scenarios
 
-## Usage Instructions
+2. **Text Highlighting Complexity**:
 
-1. **Enter Text**: Type or paste text into the input textarea
-2. **Check Grammar**: Click "Check Grammar" button to analyze the text
-3. **Review Results**: View detected issues with suggestions below
-4. **Filter Results**: Use dropdown to filter by issue type (All/Spelling/Grammar)
-5. **Copy Suggestions**: Click "Copy Suggestions" to copy all corrections
-6. **Clear**: Use "Clear" button to reset the application
+   - **Solution**: Created a custom overlay system to highlight errors while maintaining textarea functionality
 
-## API Credits
+3. **Load Balancer Configuration**:
 
-This application uses the **TextGears Grammar Check API** provided by TextGears team via RapidAPI. Special thanks to:
+   - **Solution**: Developed custom Node.js load balancer with visual feedback during redirects
 
-- **TextGears**: For providing the grammar checking service
-- **RapidAPI**: For hosting and managing the API infrastructure
+4. **Cross-Platform Compatibility**:
+   - **Solution**: Used modern CSS features with fallbacks and tested across multiple browsers
 
-## Technical Details
+### Performance Optimizations
 
-- **Frontend**: HTML5, CSS3, Vanilla JavaScript
-- **Container**: Nginx serving static files
-- **Port**: 8080 (configurable)
-- **Load Balancing**: HAProxy round-robin distribution
+- Efficient DOM manipulation for error highlighting
+- Debounced API requests to prevent excessive calls
+- Optimized CSS for smooth animations and transitions
+- Lightweight Docker image using Alpine base
 
-## Troubleshooting
+## API Credits & Attribution
 
-### Common Issues
-
-1. **API Rate Limits**: Free tier has limited requests per day
-2. **CORS Issues**: Ensure proper API headers are set
-3. **Container Not Starting**: Check port availability (8080)
-4. **Load Balancer Issues**: Verify server IP addresses in HAProxy config
-
-### Logs and Debugging
-
-```bash
-# Check container logs
-docker logs grammar-app
-
-# Check container status
-docker ps -a
-
-# Test container health
-docker exec -it grammar-app sh
-```
+- **TextGears Grammar API**: Provided by TextGears via RapidAPI platform
+- **RapidAPI**: API marketplace and management platform
+- **Google Fonts**: Inter font family for modern typography
 
 ## Development Challenges Overcome
 
-1. **API Integration**: Successfully integrated RapidAPI with proper authentication headers
-2. **Static File Serving**: Configured Nginx to serve static files efficiently in Docker
-3. **Load Balancing**: Properly configured HAProxy for round-robin distribution
-4. **Error Handling**: Implemented graceful error handling for API failures
-5. **User Experience**: Added loading states and interactive feedback
+### 1. **CORS Issues**
 
-## Contributing
+**Challenge**: Got CORS errors when calling TextGears API from browser.
 
-This project is part of an academic assignment. The code is original work and follows best practices for web development and containerization.
+**Solution**: Added proper headers and used correct content-type for the API request.
 
----
+### 2. **Docker Static Files**
 
-**Author**: [Aime SHYAKA]
+**Challenge**: HTML/CSS/JS files weren't loading properly in Docker container.
+
+**Solution**: Used Nginx in Dockerfile to serve static files on port 8080.
+
+### 3. **API Error Handling**
+
+**Challenge**: App crashed when API was down or returned errors.
+
+**Solution**: Added try-catch blocks and loading states for better user experience.
+
+### 4. **Load Balancer Health Checks**
+
+**Challenge**: HAProxy marked servers as down even when they were working.
+
+**Solution**: Made sure Nginx returns 200 OK for health check requests.
+
+### 5. **Container Networking**
+
+**Challenge**: Load balancer couldn't reach the app containers.
+
+**Solution**: Fixed IP addresses in HAProxy config (172.20.0.11, 172.20.0.12) and verified network setup.
+
+**Demo Video**: [Link to your demo video]
+**Live Application**: https://load-balancer-aime.onrender.com
+**GitHub Repository**: https://github.com/SHYAKA-Aime/Summative_writting_assistant_App

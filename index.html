@@ -10,13 +10,13 @@
 <body>
   <div class="app-wrapper">
     <div class="app-box">
-      <h1>Grammar & Spell Checker</h1>
+      <h1>WriteWise - Your writing assistant</h1>
 
       <label for="inputText" class="label">Your Text</label>
       <textarea id="inputText" placeholder="Type or paste your text here..."></textarea>
 
       <div class="button-row">
-        <button onclick="checkGrammar()" id="checkBtn">Check Grammar</button>
+        <button onclick="checkGrammar()" id="checkBtn">Check text</button>
         <button onclick="clearAll()" id="clearBtn">Clear</button>
       </div>
 
@@ -29,7 +29,7 @@
           <option value="grammar">Grammar Only</option>
         </select>
         <div class="tooltip-wrapper">
-          <button onclick="copySuggestions()" id="copyBtn">Copy Suggestions</button>
+          
           <span id="copyTooltip" class="tooltip">Copied!</span>
         </div>
       </div>
